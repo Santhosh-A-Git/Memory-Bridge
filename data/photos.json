@@ -1,0 +1,856 @@
+[
+  {
+    "id": "photo_001",
+    "image_url": "https://placehold.co/600x400?text=photo_001",
+    "date": "2023-08-24",
+    "year": 2023,
+    "location": "Bengaluru",
+    "people": [
+      "colleagues"
+    ],
+    "event": [
+      "new year"
+    ],
+    "objects": [
+      "dog"
+    ],
+    "visual_description": "A photo taken at new year in 2023 featuring colleagues with a dog",
+    "text": "new year 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_002",
+    "image_url": "https://placehold.co/600x400?text=photo_002",
+    "date": "2024-10-13",
+    "year": 2024,
+    "location": "Mumbai",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "gift"
+    ],
+    "visual_description": "A photo taken at wedding in 2024 featuring sister with a gift",
+    "text": "wedding 2024",
+    "embedding": []
+  },
+  {
+    "id": "photo_003",
+    "image_url": "https://placehold.co/600x400?text=photo_003",
+    "date": "2021-05-16",
+    "year": 2021,
+    "location": "Delhi",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "diwali"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at diwali in 2021 featuring mom, dad with a car",
+    "text": "diwali 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_004",
+    "image_url": "https://placehold.co/600x400?text=photo_004",
+    "date": "2021-08-27",
+    "year": 2021,
+    "location": "Chennai",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "gift"
+    ],
+    "visual_description": "A photo taken at birthday party in 2021 featuring sister with a gift",
+    "text": "birthday party 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_005",
+    "image_url": "https://placehold.co/600x400?text=photo_005",
+    "date": "2021-03-11",
+    "year": 2021,
+    "location": "Bengaluru",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "college farewell"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at college farewell in 2021 featuring friends",
+    "text": "college farewell 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_006",
+    "image_url": "https://placehold.co/600x400?text=photo_006",
+    "date": "2023-07-16",
+    "year": 2023,
+    "location": "Hyderabad",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at wedding in 2023 featuring mom, dad",
+    "text": "wedding 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_007",
+    "image_url": "https://placehold.co/600x400?text=photo_007",
+    "date": "2021-02-04",
+    "year": 2021,
+    "location": "Chennai",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "college farewell"
+    ],
+    "objects": [
+      "gift"
+    ],
+    "visual_description": "A photo taken at college farewell in 2021 featuring mom, dad with a gift",
+    "text": "college farewell 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_008",
+    "image_url": "https://placehold.co/600x400?text=photo_008",
+    "date": "2023-05-12",
+    "year": 2023,
+    "location": "Hyderabad",
+    "people": [
+      "brother",
+      "mom"
+    ],
+    "event": [
+      "vacation"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at vacation in 2023 featuring brother, mom",
+    "text": "vacation 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_009",
+    "image_url": "https://placehold.co/600x400?text=photo_009",
+    "date": "2021-07-06",
+    "year": 2021,
+    "location": "Chennai",
+    "people": [
+      "colleagues"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at birthday party in 2021 featuring colleagues",
+    "text": "birthday party 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_010",
+    "image_url": "https://placehold.co/600x400?text=photo_010",
+    "date": "2023-05-24",
+    "year": 2023,
+    "location": "Delhi",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at wedding in 2023 featuring sister with a car",
+    "text": "wedding 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_011",
+    "image_url": "https://placehold.co/600x400?text=photo_011",
+    "date": "2021-06-08",
+    "year": 2021,
+    "location": "Mumbai",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "gift"
+    ],
+    "visual_description": "A photo taken at birthday party in 2021 featuring mom, dad with a gift",
+    "text": "birthday party 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_012",
+    "image_url": "https://placehold.co/600x400?text=photo_012",
+    "date": "2020-08-25",
+    "year": 2020,
+    "location": "Bengaluru",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A photo taken at birthday party in 2020 featuring mom, dad with a certificate",
+    "text": "birthday party 2020",
+    "embedding": []
+  },
+  {
+    "id": "photo_013",
+    "image_url": "https://placehold.co/600x400?text=photo_013",
+    "date": "2021-02-23",
+    "year": 2021,
+    "location": "Mumbai",
+    "people": [
+      "colleagues"
+    ],
+    "event": [
+      "vacation"
+    ],
+    "objects": [
+      "dog"
+    ],
+    "visual_description": "A photo taken at vacation in 2021 featuring colleagues with a dog",
+    "text": "vacation 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_014",
+    "image_url": "https://placehold.co/600x400?text=photo_014",
+    "date": "2020-09-24",
+    "year": 2020,
+    "location": "Hyderabad",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "diwali"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at diwali in 2020 featuring sister",
+    "text": "diwali 2020",
+    "embedding": []
+  },
+  {
+    "id": "photo_015",
+    "image_url": "https://placehold.co/600x400?text=photo_015",
+    "date": "2024-01-07",
+    "year": 2024,
+    "location": "Bengaluru",
+    "people": [
+      "colleagues"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at wedding in 2024 featuring colleagues with a car",
+    "text": "wedding 2024",
+    "embedding": []
+  },
+  {
+    "id": "photo_016",
+    "image_url": "https://placehold.co/600x400?text=photo_016",
+    "date": "2024-01-20",
+    "year": 2024,
+    "location": "Mumbai",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "college farewell"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A photo taken at college farewell in 2024 featuring friends with a certificate",
+    "text": "college farewell 2024",
+    "embedding": []
+  },
+  {
+    "id": "photo_017",
+    "image_url": "https://placehold.co/600x400?text=photo_017",
+    "date": "2021-06-13",
+    "year": 2021,
+    "location": "Mumbai",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "cake"
+    ],
+    "visual_description": "A photo taken at wedding in 2021 featuring sister with a cake",
+    "text": "wedding 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_018",
+    "image_url": "https://placehold.co/600x400?text=photo_018",
+    "date": "2023-11-09",
+    "year": 2023,
+    "location": "Delhi",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "diwali"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A photo taken at diwali in 2023 featuring mom, dad with a certificate",
+    "text": "diwali 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_019",
+    "image_url": "https://placehold.co/600x400?text=photo_019",
+    "date": "2021-08-05",
+    "year": 2021,
+    "location": "Chennai",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "new year"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at new year in 2021 featuring mom, dad with a car",
+    "text": "new year 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_020",
+    "image_url": "https://placehold.co/600x400?text=photo_020",
+    "date": "2022-01-16",
+    "year": 2022,
+    "location": "Hyderabad",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "new year"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A photo taken at new year in 2022 featuring mom, dad with a certificate",
+    "text": "new year 2022",
+    "embedding": []
+  },
+  {
+    "id": "photo_021",
+    "image_url": "https://placehold.co/600x400?text=photo_021_farewell",
+    "date": "2022-11-18",
+    "year": 2022,
+    "location": "Hyderabad",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "college farewell"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A person standing with her sister at a college farewell",
+    "text": "Farewell 2022",
+    "embedding": []
+  },
+  {
+    "id": "photo_022",
+    "image_url": "https://placehold.co/600x400?text=photo_022",
+    "date": "2021-08-20",
+    "year": 2021,
+    "location": "Mumbai",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at wedding in 2021 featuring friends with a car",
+    "text": "wedding 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_023",
+    "image_url": "https://placehold.co/600x400?text=photo_023",
+    "date": "2024-12-06",
+    "year": 2024,
+    "location": "Chennai",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "new year"
+    ],
+    "objects": [
+      "gift"
+    ],
+    "visual_description": "A photo taken at new year in 2024 featuring mom, dad with a gift",
+    "text": "new year 2024",
+    "embedding": []
+  },
+  {
+    "id": "photo_024",
+    "image_url": "https://placehold.co/600x400?text=photo_024",
+    "date": "2021-02-22",
+    "year": 2021,
+    "location": "Bengaluru",
+    "people": [
+      "colleagues"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at birthday party in 2021 featuring colleagues with a car",
+    "text": "birthday party 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_025",
+    "image_url": "https://placehold.co/600x400?text=photo_025",
+    "date": "2021-06-23",
+    "year": 2021,
+    "location": "Mumbai",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "gift"
+    ],
+    "visual_description": "A photo taken at wedding in 2021 featuring sister with a gift",
+    "text": "wedding 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_026",
+    "image_url": "https://placehold.co/600x400?text=photo_026",
+    "date": "2023-07-16",
+    "year": 2023,
+    "location": "Chennai",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "vacation"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at vacation in 2023 featuring mom, dad",
+    "text": "vacation 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_027",
+    "image_url": "https://placehold.co/600x400?text=photo_027",
+    "date": "2022-03-28",
+    "year": 2022,
+    "location": "Bengaluru",
+    "people": [
+      "brother",
+      "mom"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "cake"
+    ],
+    "visual_description": "A photo taken at wedding in 2022 featuring brother, mom with a cake",
+    "text": "wedding 2022",
+    "embedding": []
+  },
+  {
+    "id": "photo_028",
+    "image_url": "https://placehold.co/600x400?text=photo_028",
+    "date": "2021-06-18",
+    "year": 2021,
+    "location": "Hyderabad",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "diwali"
+    ],
+    "objects": [
+      "gift"
+    ],
+    "visual_description": "A photo taken at diwali in 2021 featuring sister with a gift",
+    "text": "diwali 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_029",
+    "image_url": "https://placehold.co/600x400?text=photo_029",
+    "date": "2020-05-15",
+    "year": 2020,
+    "location": "Bengaluru",
+    "people": [
+      "brother",
+      "mom"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "cake"
+    ],
+    "visual_description": "A photo taken at birthday party in 2020 featuring brother, mom with a cake",
+    "text": "birthday party 2020",
+    "embedding": []
+  },
+  {
+    "id": "photo_030",
+    "image_url": "https://placehold.co/600x400?text=photo_030",
+    "date": "2022-09-09",
+    "year": 2022,
+    "location": "Chennai",
+    "people": [
+      "colleagues"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "dog"
+    ],
+    "visual_description": "A photo taken at birthday party in 2022 featuring colleagues with a dog",
+    "text": "birthday party 2022",
+    "embedding": []
+  },
+  {
+    "id": "photo_031",
+    "image_url": "https://placehold.co/600x400?text=photo_031",
+    "date": "2020-05-09",
+    "year": 2020,
+    "location": "Hyderabad",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at wedding in 2020 featuring friends with a car",
+    "text": "wedding 2020",
+    "embedding": []
+  },
+  {
+    "id": "photo_032",
+    "image_url": "https://placehold.co/600x400?text=photo_032",
+    "date": "2024-06-15",
+    "year": 2024,
+    "location": "Chennai",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "new year"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at new year in 2024 featuring mom, dad",
+    "text": "new year 2024",
+    "embedding": []
+  },
+  {
+    "id": "photo_033",
+    "image_url": "https://placehold.co/600x400?text=photo_033",
+    "date": "2022-01-08",
+    "year": 2022,
+    "location": "Bengaluru",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "new year"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A photo taken at new year in 2022 featuring friends with a certificate",
+    "text": "new year 2022",
+    "embedding": []
+  },
+  {
+    "id": "photo_034",
+    "image_url": "https://placehold.co/600x400?text=photo_034",
+    "date": "2022-12-22",
+    "year": 2022,
+    "location": "Mumbai",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at wedding in 2022 featuring friends",
+    "text": "wedding 2022",
+    "embedding": []
+  },
+  {
+    "id": "photo_035",
+    "image_url": "https://placehold.co/600x400?text=photo_035",
+    "date": "2022-11-03",
+    "year": 2022,
+    "location": "Bengaluru",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "new year"
+    ],
+    "objects": [],
+    "visual_description": "A photo taken at new year in 2022 featuring friends",
+    "text": "new year 2022",
+    "embedding": []
+  },
+  {
+    "id": "photo_036",
+    "image_url": "https://placehold.co/600x400?text=photo_036",
+    "date": "2023-06-19",
+    "year": 2023,
+    "location": "Bengaluru",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "college farewell"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A photo taken at college farewell in 2023 featuring sister with a certificate",
+    "text": "college farewell 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_037",
+    "image_url": "https://placehold.co/600x400?text=photo_037",
+    "date": "2020-09-04",
+    "year": 2020,
+    "location": "Chennai",
+    "people": [
+      "mom",
+      "dad"
+    ],
+    "event": [
+      "vacation"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A photo taken at vacation in 2020 featuring mom, dad with a certificate",
+    "text": "vacation 2020",
+    "embedding": []
+  },
+  {
+    "id": "photo_038",
+    "image_url": "https://placehold.co/600x400?text=photo_038",
+    "date": "2020-02-13",
+    "year": 2020,
+    "location": "Mumbai",
+    "people": [
+      "brother",
+      "mom"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at birthday party in 2020 featuring brother, mom with a car",
+    "text": "birthday party 2020",
+    "embedding": []
+  },
+  {
+    "id": "photo_039",
+    "image_url": "https://placehold.co/600x400?text=photo_039",
+    "date": "2023-12-15",
+    "year": 2023,
+    "location": "Hyderabad",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at birthday party in 2023 featuring friends with a car",
+    "text": "birthday party 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_040",
+    "image_url": "https://placehold.co/600x400?text=photo_040",
+    "date": "2021-04-23",
+    "year": 2021,
+    "location": "Mumbai",
+    "people": [
+      "friends"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "gift"
+    ],
+    "visual_description": "A photo taken at wedding in 2021 featuring friends with a gift",
+    "text": "wedding 2021",
+    "embedding": []
+  },
+  {
+    "id": "photo_041",
+    "image_url": "https://placehold.co/600x400?text=photo_041",
+    "date": "2023-01-06",
+    "year": 2023,
+    "location": "Mumbai",
+    "people": [
+      "colleagues"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "cake"
+    ],
+    "visual_description": "A photo taken at birthday party in 2023 featuring colleagues with a cake",
+    "text": "birthday party 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_042",
+    "image_url": "https://placehold.co/600x400?text=photo_042",
+    "date": "2022-01-24",
+    "year": 2022,
+    "location": "Mumbai",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "certificate"
+    ],
+    "visual_description": "A photo taken at birthday party in 2022 featuring sister with a certificate",
+    "text": "birthday party 2022",
+    "embedding": []
+  },
+  {
+    "id": "photo_043",
+    "image_url": "https://placehold.co/600x400?text=photo_043",
+    "date": "2023-07-20",
+    "year": 2023,
+    "location": "Mumbai",
+    "people": [
+      "sister"
+    ],
+    "event": [
+      "new year"
+    ],
+    "objects": [
+      "cake"
+    ],
+    "visual_description": "A photo taken at new year in 2023 featuring sister with a cake",
+    "text": "new year 2023",
+    "embedding": []
+  },
+  {
+    "id": "photo_044",
+    "image_url": "https://placehold.co/600x400?text=photo_044",
+    "date": "2024-04-28",
+    "year": 2024,
+    "location": "Delhi",
+    "people": [
+      "brother",
+      "mom"
+    ],
+    "event": [
+      "wedding"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at wedding in 2024 featuring brother, mom with a car",
+    "text": "wedding 2024",
+    "embedding": []
+  },
+  {
+    "id": "photo_045",
+    "image_url": "https://placehold.co/600x400?text=photo_045",
+    "date": "2024-08-09",
+    "year": 2024,
+    "location": "Bengaluru",
+    "people": [
+      "colleagues"
+    ],
+    "event": [
+      "birthday party"
+    ],
+    "objects": [
+      "car"
+    ],
+    "visual_description": "A photo taken at birthday party in 2024 featuring colleagues with a car",
+    "text": "birthday party 2024",
+    "embedding": []
+  }
+]
