@@ -2,7 +2,7 @@ import json
 import os
 from typing import List, Dict, Any
 
-DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "..", "data", "photos.json")
+DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "data", "photos.json")
 
 def load_photos() -> List[Dict[str, Any]]:
     if not os.path.exists(DATA_FILE):
