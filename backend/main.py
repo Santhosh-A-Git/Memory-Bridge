@@ -12,12 +12,9 @@ load_dotenv()
 app = FastAPI(title="Memory Bridge API")
 
 # Configure CORS
-cors_origin = os.getenv("CORS_ORIGIN", "*")
-origins = [o.strip() for o in cors_origin.split(",")] if cors_origin != "*" else ["*"]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if "*" in origins else origins,
+    allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
