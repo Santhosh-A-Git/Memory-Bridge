@@ -48,6 +48,10 @@ export default function MemoryBridge() {
   };
 
   const handleContinue = async () => {
+    if (!parsedMemory?.missing_clues || parsedMemory.missing_clues.length === 0) {
+      await fetchCandidates(parsedMemory, additionalClues);
+      return;
+    }
     setStep("clarify_loading");
     try {
       const res = await fetch(`${API_URL}/memory/next-clue`, {
