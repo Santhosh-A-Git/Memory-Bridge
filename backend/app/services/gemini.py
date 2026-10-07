@@ -49,12 +49,10 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         os.getenv("GEMINI_TEXT_MODEL", "gemini-3.1-pro-preview"),
         "gemini-2.5-flash",
         "gemini-2.5-pro",
-        "gemini-1.5-flash",
-        "gemini-1.5-pro",
-        "gemini-pro"
+        "gemini-1.5-flash"
     ]
     
-    last_error = None
+    errors = []
     for m_name in models_to_try:
         try:
             model = genai.GenerativeModel(m_name)
@@ -66,14 +64,14 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
                 data = json.loads(match.group(0))
                 return ParsedMemory(**data)
             else:
-                raise ValueError("No JSON object could be extracted.")
+                raise ValueError(f"No JSON object found in {m_name}")
         except Exception as e:
-            last_error = e
+            errors.append(f"{m_name}: {str(e)}")
             continue
             
-    # If all models fail
-    error_msg = str(last_error).replace('"', "'")
-    print(f"Gemini parsing failed on all models: {error_msg}")
+    # If all models fail, return the very first error so we see the primary issue
+    error_msg = str(errors[0]).replace('"', "'") if errors else "Unknown API Failure"
+    print(f"Gemini parsing failed on all models. Primary error: {error_msg}")
     return ParsedMemory(
         people=[],
         events=[f"ERROR: {error_msg}"[:200]],
