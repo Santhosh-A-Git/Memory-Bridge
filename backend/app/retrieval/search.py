@@ -14,15 +14,21 @@ def get_candidates(parsed_memory: dict, additional_clues: dict) -> List[Dict[str
     photos = load_photos()
     candidates = []
     
-    # Extract known clues
-    target_people = [p.lower() for p in parsed_memory.get("people", [])]
-    target_events = [e.lower() for e in parsed_memory.get("events", [])]
+    # Safely extract known clues ensuring they are lists
+    raw_people = parsed_memory.get("people", [])
+    if isinstance(raw_people, str): raw_people = [raw_people]
+    target_people = [str(p).lower() for p in raw_people]
+    
+    raw_events = parsed_memory.get("events", [])
+    if isinstance(raw_events, str): raw_events = [raw_events]
+    target_events = [str(e).lower() for e in raw_events]
     
     target_year = None
     time_clue = parsed_memory.get("time")
-    if time_clue and time_clue.get("value"):
+    if time_clue:
+        time_str = str(time_clue.get("value")) if isinstance(time_clue, dict) else str(time_clue)
         import re
-        year_match = re.search(r'(20[0-9]{2})', str(time_clue.get("value")))
+        year_match = re.search(r'(20[0-9]{2})', time_str)
         if year_match:
             target_year = int(year_match.group(1))
             
@@ -30,8 +36,9 @@ def get_candidates(parsed_memory: dict, additional_clues: dict) -> List[Dict[str
     target_location = additional_clues.get("location", "").lower()
     
     # If the LLM already extracted places, combine them
-    if parsed_memory.get("places"):
-        target_location = parsed_memory["places"][0].lower()
+    places = parsed_memory.get("places")
+    if places:
+        target_location = str(places[0]).lower() if isinstance(places, list) and len(places) > 0 else str(places).lower()
     
     for photo in photos:
         score = 0.0
