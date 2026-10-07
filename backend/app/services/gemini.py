@@ -62,6 +62,20 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
             match = re.search(r'\{.*\}', response.text, re.DOTALL)
             if match:
                 data = json.loads(match.group(0))
+                
+                # Apply canonical mapping to LLM output so it matches photos.json tags!
+                llm_events = data.get("events", [])
+                mapped_events = []
+                for e in llm_events:
+                    e_lower = e.lower()
+                    if e_lower in ["trip", "goa", "holiday", "goa trip"]:
+                        mapped_events.append("vacation")
+                    elif e_lower in ["farewell", "graduation"]:
+                        mapped_events.append("college farewell")
+                    else:
+                        mapped_events.append(e)
+                data["events"] = list(set(mapped_events))
+                
                 return ParsedMemory(**data)
             else:
                 raise ValueError(f"No JSON object found in {m_name}")

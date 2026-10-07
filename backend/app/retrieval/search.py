@@ -21,10 +21,10 @@ def get_candidates(parsed_memory: dict, additional_clues: dict) -> List[Dict[str
     target_year = None
     time_clue = parsed_memory.get("time")
     if time_clue and time_clue.get("value"):
-        try:
-            target_year = int(time_clue.get("value")[:4])
-        except ValueError:
-            pass
+        import re
+        year_match = re.search(r'(20[0-9]{2})', str(time_clue.get("value")))
+        if year_match:
+            target_year = int(year_match.group(1))
             
     # Add any additional clues gathered from questions
     target_location = additional_clues.get("location", "").lower()
@@ -35,15 +35,23 @@ def get_candidates(parsed_memory: dict, additional_clues: dict) -> List[Dict[str
         
         # People match
         photo_people = [p.lower() for p in photo.get("people", [])]
-        if target_people and any(p in photo_people for p in target_people):
-            score += 0.3
-            matched_clues.extend([p for p in target_people if p in photo_people])
+        if target_people:
+            for tp in target_people:
+                for pp in photo_people:
+                    if tp in pp or pp in tp:
+                        score += 0.3
+                        matched_clues.append(pp)
+                        break
             
         # Event match
         photo_events = [e.lower() for e in photo.get("event", [])]
-        if target_events and any(e in photo_events for e in target_events):
-            score += 0.3
-            matched_clues.extend([e for e in target_events if e in photo_events])
+        if target_events:
+            for te in target_events:
+                for pe in photo_events:
+                    if te in pe or pe in te:
+                        score += 0.3
+                        matched_clues.append(pe)
+                        break
             
         # Time match
         if target_year and photo.get("year") == target_year:
