@@ -128,8 +128,9 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         if year_match: found_year = year_match.group(1)
         missing_clues = []
         if not found_cities: missing_clues.append('location')
-        
-        if not found_people and not found_events and not found_year and not found_cities: missing_clues.append('event')
+        if not found_events: missing_clues.append('event')
+        if not found_people: missing_clues.append('people')
+        if not found_year: missing_clues.append('time')
         return ParsedMemory(people=found_people, events=found_events, time={'type': 'approximate', 'value': found_year}, missing_clues=missing_clues, memory_confidence='high')
     except Exception as e:
         import traceback
@@ -207,9 +208,15 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
             "question": "Who else was in the photo with you?",
             "options": ["Friends", "Family", "Colleagues", "Not sure"]
         }
-    
+    elif "location" in missing:
+        return {
+            "clue_dimension": "location",
+            "question": "Do you remember which city this was in?",
+            "options": ["Hyderabad", "Bengaluru", "Other", "Not sure"]
+        }
+        
     return {
-        "clue_dimension": "location",
-        "question": "Do you remember which city this was in?",
-        "options": ["Hyderabad", "Bengaluru", "Other", "Not sure"]
+        "clue_dimension": "time",
+        "question": "Do you remember which year this was?",
+        "options": ["2019", "2020", "2021", "2022", "Not sure"]
     }
