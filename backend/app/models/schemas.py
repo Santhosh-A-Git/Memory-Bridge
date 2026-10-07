@@ -1,5 +1,5 @@
 # pyrefly: ignore [missing-import]
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional, Any, Dict
 
 class TimeClue(BaseModel):
@@ -7,16 +7,23 @@ class TimeClue(BaseModel):
     value: Optional[str] = None
 
 class ParsedMemory(BaseModel):
-    people: Optional[List[str]] = None
-    places: Optional[List[str]] = None
-    events: Optional[List[str]] = None
+    people: List[str] = []
+    places: List[str] = []
+    events: List[str] = []
     time: Optional[TimeClue] = None
-    objects: Optional[List[str]] = None
-    visual: Optional[List[str]] = None
-    text: Optional[List[str]] = None
-    relationship_context: Optional[List[str]] = None
-    missing_clues: Optional[List[str]] = None
+    objects: List[str] = []
+    visual: List[str] = []
+    text: List[str] = []
+    relationship_context: List[str] = []
+    missing_clues: List[str] = []
     memory_confidence: str = Field(default="unknown")
+
+    @field_validator('people', 'places', 'events', 'objects', 'visual', 'text', 'relationship_context', 'missing_clues', mode='before')
+    @classmethod
+    def null_to_empty_list(cls, v):
+        if v is None:
+            return []
+        return v
 
 class MemoryParseRequest(BaseModel):
     memory: str
@@ -48,5 +55,5 @@ class NextClueResponse(BaseModel):
 
 class SessionEventRequest(BaseModel):
     session_id: str
-    event: str
-    metadata: Dict[str, Any] = {}
+    event_type: str
+    details: Dict[str, Any]
