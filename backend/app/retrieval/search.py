@@ -59,6 +59,19 @@ def get_candidates(parsed_memory: dict, additional_clues: dict) -> List[Dict[str
             elif target_location != "other":
                 # Penalize if it explicitly does not match a known non-"other" location
                 score -= 0.2
+
+        # Fuzzy Text / Description Matching (safety net)
+        memory_text = (parsed_memory.get("original_text", "")).lower()
+        if not memory_text:
+            memory_text = " ".join(target_people + target_events)
+            
+        desc = (photo.get("visual_description", "") + " " + photo.get("text", "")).lower()
+        words = set([w for w in memory_text.split() if len(w) > 3])
+        overlap = sum(1 for w in words if w in desc)
+        if overlap > 0:
+            score += (overlap * 0.05)
+            if "fuzzy match" not in matched_clues:
+                matched_clues.append("fuzzy match")
                 
         if score > 0:
             candidates.append({
