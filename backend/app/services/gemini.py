@@ -46,17 +46,14 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
     # We will use simple JSON mode parsing as the sdk supports it or simple regex
     try:
         response = model.generate_content(prompt)
-        import json
-        text = response.text.strip()
-        if text.startswith("```json"):
-            text = text[7:]
-        if text.startswith("```"):
-            text = text[3:]
-        if text.endswith("```"):
-            text = text[:-3]
-        text = text.strip()
+        import json, re
         
-        data = json.loads(text)
+        match = re.search(r'\{.*\}', response.text, re.DOTALL)
+        if match:
+            data = json.loads(match.group(0))
+        else:
+            raise ValueError("No JSON object could be extracted.")
+            
         return ParsedMemory(**data)
     except Exception as e:
         print(f"Gemini parsing failed: {e}")
@@ -100,16 +97,13 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
     
     try:
         response = model.generate_content(prompt)
-        import json
-        text = response.text.strip()
-        if text.startswith("```json"):
-            text = text[7:]
-        if text.startswith("```"):
-            text = text[3:]
-        if text.endswith("```"):
-            text = text[:-3]
-        text = text.strip()
-        return json.loads(text)
+        import json, re
+        
+        match = re.search(r'\{.*\}', response.text, re.DOTALL)
+        if match:
+            return json.loads(match.group(0))
+        else:
+            raise ValueError("No JSON object could be extracted.")
     except Exception as e:
         print(f"Gemini next clue failed: {e}")
         return {
