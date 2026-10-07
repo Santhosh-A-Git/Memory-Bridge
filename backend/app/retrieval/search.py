@@ -37,6 +37,12 @@ def get_candidates(parsed_memory: dict, additional_clues: dict) -> List[Dict[str
         # Add any additional clues gathered from questions
         target_location = additional_clues.get("location", "").lower()
         
+        if "event" in additional_clues and additional_clues["event"] != "Not sure":
+            target_events.append(str(additional_clues["event"]).lower())
+            
+        if "people" in additional_clues and additional_clues["people"] != "Not sure":
+            target_people.append(str(additional_clues["people"]).lower())
+        
         # If the LLM already extracted places, combine them
         places = parsed_memory.get("places")
         if places:
