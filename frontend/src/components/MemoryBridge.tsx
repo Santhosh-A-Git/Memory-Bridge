@@ -124,6 +124,10 @@ export default function MemoryBridge() {
 
   return (
     <div className="max-w-2xl mx-auto p-4 md:p-8 bg-white dark:bg-gray-900 rounded-2xl shadow-xl min-h-[600px] flex flex-col justify-between">
+      <div className="mb-8 text-center">
+        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 tracking-tight">MEMORY BRIDGE</h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium uppercase tracking-widest">Turn an incomplete memory into the next useful retrieval clue</p>
+      </div>
       <div>
         {step === "input" && (
           <div className="animate-fade-in">
