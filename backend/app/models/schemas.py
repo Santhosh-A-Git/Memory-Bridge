@@ -7,15 +7,15 @@ class TimeClue(BaseModel):
     value: Optional[str] = None
 
 class ParsedMemory(BaseModel):
-    people: List[str] = []
-    places: List[str] = []
-    events: List[str] = []
+    people: Optional[List[str]] = None
+    places: Optional[List[str]] = None
+    events: Optional[List[str]] = None
     time: Optional[TimeClue] = None
-    objects: List[str] = []
-    visual: List[str] = []
-    text: List[str] = []
-    relationship_context: List[str] = []
-    missing_clues: List[str] = []
+    objects: Optional[List[str]] = None
+    visual: Optional[List[str]] = None
+    text: Optional[List[str]] = None
+    relationship_context: Optional[List[str]] = None
+    missing_clues: Optional[List[str]] = None
     memory_confidence: str = Field(default="unknown")
 
 class MemoryParseRequest(BaseModel):
