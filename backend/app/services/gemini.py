@@ -37,8 +37,10 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
     - visual context
     - text visible in the photo
     - relationship_context
-    - missing_clues: infer what important retrieval dimensions are MISSING (e.g., exact_date, location, people)
+    missing_clues: infer what important retrieval dimensions are MISSING (e.g., exact_date, location, people)
     - memory_confidence: high, medium, low
+    
+    You MUST respond with a raw JSON object containing these keys.
     
     Memory: "{memory_text}"
     """
