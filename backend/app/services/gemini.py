@@ -58,10 +58,11 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
             
         return ParsedMemory(**data)
     except Exception as e:
-        print(f"Gemini parsing failed: {e}")
+        error_msg = str(e).replace('"', "'")
+        print(f"Gemini parsing failed: {error_msg}")
         return ParsedMemory(
             people=[],
-            events=[],
+            events=[f"ERROR: {error_msg}"[:200]],
             missing_clues=["api_failure"],
             memory_confidence="low"
         )
