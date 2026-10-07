@@ -59,7 +59,6 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         try:
             model = genai.GenerativeModel(m_name)
             response = model.generate_content(prompt)
-            import json, re
             
             match = re.search(r'\{.*\}', response.text, re.DOTALL)
             if match:
@@ -177,7 +176,6 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
         try:
             model = genai.GenerativeModel(m_name)
             response = model.generate_content(prompt)
-            import json, re
             
             match = re.search(r'\{.*\}', response.text, re.DOTALL)
             if match:
