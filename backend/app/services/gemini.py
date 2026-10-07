@@ -76,11 +76,20 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         year_match = re.search(r'(202[0-4])', lower_text)
         if year_match: found_year = year_match.group(1)
             
+        found_cities = []
+        for city in ["hyderabad", "bengaluru", "mumbai", "delhi", "chennai", "goa"]:
+            if city in lower_text: found_cities.append(city)
+            
+        missing_clues = []
+        if not found_cities: missing_clues.append("location")
+        if "202" in lower_text and not re.search(r'(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)', lower_text):
+            missing_clues.append("exact_date")
+            
         return ParsedMemory(
             people=found_people,
             events=found_events,
             time={"type": "approximate", "value": found_year},
-            missing_clues=["location" if "goa" not in lower_text else "exact_date"],
+            missing_clues=missing_clues,
             memory_confidence="medium"
         )
 
@@ -124,8 +133,23 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
             raise ValueError("No JSON object could be extracted.")
     except Exception as e:
         print(f"Gemini next clue failed: {e}")
-        return {
-            "clue_dimension": "location",
-            "question": "Do you remember which city this was in?",
-            "options": ["Hyderabad", "Bengaluru", "Other", "Not sure"]
-        }
+        missing = memory.get("missing_clues", ["location"])
+        
+        if "exact_date" in missing and "location" not in missing:
+            return {
+                "clue_dimension": "exact_date",
+                "question": "Do you remember the exact month or date of this trip?",
+                "options": ["Yes", "No, just the year", "Not sure"]
+            }
+        elif "people" in missing:
+            return {
+                "clue_dimension": "people",
+                "question": "Who else was in the photo with you?",
+                "options": ["Friends", "Family", "Colleagues", "Not sure"]
+            }
+        else:
+            return {
+                "clue_dimension": "location",
+                "question": "Do you remember which city this was in?",
+                "options": ["Hyderabad", "Bengaluru", "Mumbai", "Not sure"]
+            }
