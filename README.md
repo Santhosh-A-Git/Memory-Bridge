@@ -43,9 +43,19 @@ npm run dev
 ### 4. Demo Data
 The mock dataset is already generated at `/data/photos.json`. You can regenerate it by running `node scripts/generate_dataset.js` from the project root.
 
-## Architecture
-- The frontend captures natural language memory and communicates with the backend APIs.
-- The backend parses the memory using Gemini API, identifying the missing clues.
-- The retrieval module deterministically finds candidates based on known clues.
-- The next-clue reasoner identifies the highest-value missing detail and generates a question.
-- Once answered, candidates are re-ranked, and the refined list is sent to the UI for visual recognition.
+## Core MVP Architecture & Intelligence 🧠
+
+This MVP was built to prove where intelligence is truly needed in the photo retrieval journey. It completely eliminates strict keyword requirements and acts as an intelligent conversational agent.
+
+1. **Natural Language Parser (Invincible LLM Cascade)**
+   Instead of forcing users to use metadata filters (e.g. `Date: 2022`), the user types a completely unstructured sentence (e.g., *"Find the photo of me with my friends at my goa trip"*).
+   The backend uses an **Invincible LLM Cascade** (iterating through `gemini-3.1-pro-preview`, `gemini-2.5-flash`, `gemini-1.5-pro` until one perfectly succeeds, bypassing API limits or deprecations) to extract dimensions:
+   - People: `["friends"]`
+   - Events: `["goa trip"]`
+   - Time: `None`
+   
+2. **Context-Aware Disambiguation (The "Memory Bridge")**
+   The intelligence engine realizes that crucial dimensions (like Location or Exact Date) are missing. Instead of returning 100 random photos, it dynamically generates a contextual follow-up question: *"Do you remember the exact month or date of this trip?"*
+   
+3. **Targeted Retrieval (`search.py`)**
+   Once the user provides the missing clue, the search algorithm maps the extracted entities to the exact structured metadata of the photos, scoring and filtering to return *only* the photos that precisely match the user's targeted memory.
