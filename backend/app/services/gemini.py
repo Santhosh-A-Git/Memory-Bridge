@@ -23,7 +23,7 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
             memory_confidence="high"
         )
         
-    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-3.8-flash")
+    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.5-pro")
     model = genai.GenerativeModel(model_name)
     
     prompt = f"""
@@ -59,38 +59,11 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         return ParsedMemory(**data)
     except Exception as e:
         print(f"Gemini parsing failed: {e}")
-        
-        # SMART FALLBACK: If Google AI fails, manually parse the text so the MVP never blocks!
-        lower_text = memory_text.lower()
-        
-        found_people = []
-        for p in ["sister", "brother", "mom", "dad", "friends", "colleagues"]:
-            if p in lower_text: found_people.append(p)
-            
-        found_events = []
-        for ev in ["college farewell", "birthday", "wedding", "diwali", "new year", "vacation", "trip", "goa"]:
-            if ev in lower_text: found_events.append(ev)
-            
-        found_year = "2022"
-        import re
-        year_match = re.search(r'(202[0-4])', lower_text)
-        if year_match: found_year = year_match.group(1)
-            
-        found_cities = []
-        for city in ["hyderabad", "bengaluru", "mumbai", "delhi", "chennai", "goa"]:
-            if city in lower_text: found_cities.append(city)
-            
-        missing_clues = []
-        if not found_cities: missing_clues.append("location")
-        if "202" in lower_text and not re.search(r'(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)', lower_text):
-            missing_clues.append("exact_date")
-            
         return ParsedMemory(
-            people=found_people,
-            events=found_events,
-            time={"type": "approximate", "value": found_year},
-            missing_clues=missing_clues,
-            memory_confidence="medium"
+            people=[],
+            events=[],
+            missing_clues=["api_failure"],
+            memory_confidence="low"
         )
 
 def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clues: dict) -> dict:
@@ -101,7 +74,7 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
             "options": ["Hyderabad", "Bengaluru", "Other", "Not sure"]
         }
         
-    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-3.8-flash")
+    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.5-pro")
     model = genai.GenerativeModel(model_name)
     
     prompt = f"""
