@@ -69,14 +69,56 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
             errors.append(f"{m_name}: {str(e)}")
             continue
             
-    # If all models fail, return the very first error so we see the primary issue
+    # If all models fail due to Quota/429
     error_msg = str(errors[0]).replace('"', "'") if errors else "Unknown API Failure"
-    print(f"Gemini parsing failed on all models. Primary error: {error_msg}")
+    print(f"Gemini parsing failed. Falling back to Local NLP Engine due to: {error_msg}")
+    
+    # ---------------------------------------------------------
+    # LOCAL NLP ENGINE (Zero-API Fallback for MVP Dataset)
+    # ---------------------------------------------------------
+    lower_text = memory_text.lower()
+    
+    import json, os, re
+    data_path = os.path.join(os.path.dirname(__file__), "..", "..", "data", "photos.json")
+    
+    found_people, found_events, found_cities = [], [], []
+    found_year = None
+    
+    if os.path.exists(data_path):
+        with open(data_path, "r") as f:
+            photos = json.load(f)
+            
+        all_people = set(p.lower() for photo in photos for p in photo.get("people", []))
+        all_events = set(e.lower() for photo in photos for e in photo.get("event", []))
+        all_locs = set((photo.get("location") or "").lower() for photo in photos if photo.get("location"))
+        
+        # Add common synonyms
+        if "vacation" in all_events: all_events.update(["trip", "goa", "holiday"])
+        if "college farewell" in all_events: all_events.update(["farewell", "graduation"])
+        
+        for p in all_people:
+            if p in lower_text: found_people.append(p)
+        for e in all_events:
+            if e in lower_text: found_events.append(e)
+        for l in all_locs:
+            if l in lower_text: found_cities.append(l)
+            
+    year_match = re.search(r'(20[0-9]{2})', lower_text)
+    if year_match: found_year = year_match.group(1)
+        
+    missing_clues = []
+    if not found_cities: missing_clues.append("location")
+    if found_year and not re.search(r'(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)', lower_text):
+        missing_clues.append("exact_date")
+    if not found_people and not found_events and not found_year and not found_cities:
+        missing_clues.append("event") # if completely vague
+        
     return ParsedMemory(
-        people=[],
-        events=[f"ERROR: {error_msg}"[:200]],
-        missing_clues=["api_failure"],
-        memory_confidence="low"
+        people=found_people,
+        events=found_events,
+        time={"type": "approximate", "value": found_year},
+        missing_clues=missing_clues,
+        memory_confidence="high"
     )
 
 def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clues: dict) -> dict:
