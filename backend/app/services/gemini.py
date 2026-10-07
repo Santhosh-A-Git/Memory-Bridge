@@ -23,7 +23,7 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
             memory_confidence="high"
         )
         
-    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-pro")
+    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-1.5-flash")
     model = genai.GenerativeModel(model_name)
     
     prompt = f"""
@@ -45,7 +45,12 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
     
     # We will use simple JSON mode parsing as the sdk supports it or simple regex
     try:
-        response = model.generate_content(prompt)
+        response = model.generate_content(
+            prompt,
+            generation_config=genai.GenerationConfig(
+                response_mime_type="application/json",
+            )
+        )
         import json
         text = response.text.strip()
         if text.startswith("```json"):
@@ -77,7 +82,7 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
             "options": ["Hyderabad", "Bengaluru", "Other", "Not sure"]
         }
         
-    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-pro")
+    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-1.5-flash")
     model = genai.GenerativeModel(model_name)
     
     prompt = f"""
@@ -99,7 +104,12 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
     """
     
     try:
-        response = model.generate_content(prompt)
+        response = model.generate_content(
+            prompt,
+            generation_config=genai.GenerationConfig(
+                response_mime_type="application/json",
+            )
+        )
         import json
         text = response.text.strip()
         if text.startswith("```json"):
