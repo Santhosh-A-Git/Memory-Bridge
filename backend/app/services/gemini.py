@@ -59,11 +59,16 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         data = json.loads(text)
         return ParsedMemory(**data)
     except Exception as e:
-        error_msg = str(e).replace('"', "'")
+        try:
+            available = [m.name.replace("models/", "") for m in genai.list_models() if "generateContent" in m.supported_generation_methods]
+            error_msg = "Available: " + ", ".join(available)
+        except Exception as list_e:
+            error_msg = str(e).replace('"', "'")
+            
         print(f"Gemini parsing failed: {error_msg}")
         return ParsedMemory(
             people=["API_ERROR"],
-            events=[error_msg[:100] if error_msg else "Unknown Error"],
+            events=[error_msg[:150] if error_msg else "Unknown Error"],
             time={"type": "approximate", "value": "2022"},
             missing_clues=["api_failure", "check_logs"],
             memory_confidence="low"
