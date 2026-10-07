@@ -201,7 +201,7 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
             continue
             
     print(f"Gemini next clue failed on all models: {last_error}")
-    missing = memory.get("missing_clues", ["location"])
+    missing = memory.get("missing_clues") or ["location"]
     
     if "exact_date" in missing and "location" not in missing:
         return {

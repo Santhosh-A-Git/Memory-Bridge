@@ -14,12 +14,12 @@ def get_candidates(parsed_memory: dict, additional_clues: dict) -> List[Dict[str
     photos = load_photos()
     candidates = []
     
-    # Safely extract known clues ensuring they are lists
-    raw_people = parsed_memory.get("people", [])
+    # Safely extract known clues ensuring they are lists and not None
+    raw_people = parsed_memory.get("people") or []
     if isinstance(raw_people, str): raw_people = [raw_people]
     target_people = [str(p).lower() for p in raw_people]
     
-    raw_events = parsed_memory.get("events", [])
+    raw_events = parsed_memory.get("events") or []
     if isinstance(raw_events, str): raw_events = [raw_events]
     target_events = [str(e).lower() for e in raw_events]
     
