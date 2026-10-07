@@ -98,10 +98,23 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         
         for p in all_people:
             if p in lower_text: found_people.append(p)
+            
+        raw_found_events = []
         for e in all_events:
-            if e in lower_text: found_events.append(e)
+            if e in lower_text: raw_found_events.append(e)
+            
         for l in all_locs:
             if l in lower_text: found_cities.append(l)
+            
+        # Map synonyms back to canonical dataset events so search.py works!
+        for e in raw_found_events:
+            if e in ["trip", "goa", "holiday"]:
+                found_events.append("vacation")
+            elif e in ["farewell", "graduation"]:
+                found_events.append("college farewell")
+            else:
+                found_events.append(e)
+        found_events = list(set(found_events))
             
     year_match = re.search(r'(20[0-9]{2})', lower_text)
     if year_match: found_year = year_match.group(1)
