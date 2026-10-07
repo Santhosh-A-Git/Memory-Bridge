@@ -29,6 +29,10 @@ def get_candidates(parsed_memory: dict, additional_clues: dict) -> List[Dict[str
     # Add any additional clues gathered from questions
     target_location = additional_clues.get("location", "").lower()
     
+    # If the LLM already extracted places, combine them
+    if parsed_memory.get("places"):
+        target_location = parsed_memory["places"][0].lower()
+    
     for photo in photos:
         score = 0.0
         matched_clues = []
