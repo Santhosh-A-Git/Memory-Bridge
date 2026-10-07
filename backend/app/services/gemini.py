@@ -92,64 +92,48 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
     # ---------------------------------------------------------
     # LOCAL NLP ENGINE (Zero-API Fallback for MVP Dataset)
     # ---------------------------------------------------------
-    lower_text = memory_text.lower()
-    
-    import json, os, re
-    data_path = os.path.join(os.path.dirname(__file__), "..", "..", "data", "photos.json")
-    
-    found_people, found_events, found_cities = [], [], []
-    found_year = None
-    
-    if os.path.exists(data_path):
-        with open(data_path, "r") as f:
-            photos = json.load(f)
-            
-        all_people = set(p.lower() for photo in photos for p in photo.get("people", []))
-        all_events = set(e.lower() for photo in photos for e in photo.get("event", []))
-        all_locs = set((photo.get("location") or "").lower() for photo in photos if photo.get("location"))
-        
-        # Add common synonyms and external locations the user might test
-        all_locs.update(["goa", "pune", "kerala", "jaipur", "agra"])
-        if "vacation" in all_events: all_events.update(["trip", "goa trip", "holiday"])
-        if "college farewell" in all_events: all_events.update(["farewell", "graduation"])
-        
-        for p in all_people:
-            if p in lower_text: found_people.append(p)
-            
-        raw_found_events = []
-        for e in all_events:
-            if e in lower_text: raw_found_events.append(e)
-            
-        for l in all_locs:
-            if l in lower_text: found_cities.append(l)
-            
-        # Map synonyms back to canonical dataset events so search.py works!
-        for e in raw_found_events:
-            if e in ["trip", "goa", "holiday", "goa trip"]:
-                found_events.append("vacation")
-            elif e in ["farewell", "graduation"]:
-                found_events.append("college farewell")
-            else:
-                found_events.append(e)
-        found_events = list(set(found_events))
-            
-    year_match = re.search(r'(20[0-9]{2})', lower_text)
-    if year_match: found_year = year_match.group(1)
-        
-    missing_clues = []
-    if not found_cities: missing_clues.append("location")
-    if found_year and not re.search(r'(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)', lower_text):
-        missing_clues.append("exact_date")
-    if not found_people and not found_events and not found_year and not found_cities:
-        missing_clues.append("event") # if completely vague
-        
-    return ParsedMemory(
-        people=found_people,
-        events=found_events,
-        time={"type": "approximate", "value": found_year},
-        missing_clues=missing_clues,
-        memory_confidence="high"
-    )
+    try:
+        lower_text = memory_text.lower()
+        data_path = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'photos.json')
+        found_people, found_events, found_cities = [], [], []
+        found_year = None
+        if os.path.exists(data_path):
+            with open(data_path, 'r') as f:
+                photos = json.load(f)
+                all_people = set()
+                all_events = set()
+                all_locs = set()
+                for p in photos:
+                    all_people.update(p.get('people', []))
+                    all_events.update(p.get('event', []))
+                    loc = p.get('location')
+                    if loc: all_locs.add(loc.lower())
+            all_locs.update(['goa', 'pune', 'kerala', 'jaipur', 'agra'])
+            if 'vacation' in all_events: all_events.update(['trip', 'goa trip', 'holiday'])
+            if 'college farewell' in all_events: all_events.update(['farewell', 'graduation'])
+            for p in all_people:
+                if p in lower_text: found_people.append(p)
+            raw_found_events = []
+            for e in all_events:
+                if e in lower_text: raw_found_events.append(e)
+            for l in all_locs:
+                if l in lower_text: found_cities.append(l)
+            for e in raw_found_events:
+                if e in ['trip', 'goa', 'holiday', 'goa trip']: found_events.append('vacation')
+                elif e in ['farewell', 'graduation']: found_events.append('college farewell')
+                else: found_events.append(e)
+            found_events = list(set(found_events))
+        year_match = re.search(r'(20[0-9]{2})', lower_text)
+        if year_match: found_year = year_match.group(1)
+        missing_clues = []
+        if not found_cities: missing_clues.append('location')
+        if found_year and not re.search(r'(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)', lower_text): missing_clues.append('exact_date')
+        if not found_people and not found_events and not found_year and not found_cities: missing_clues.append('event')
+        return ParsedMemory(people=found_people, events=found_events, time={'type': 'approximate', 'value': found_year}, missing_clues=missing_clues, memory_confidence='high')
+    except Exception as e:
+        import traceback
+        err = str(e) + '|' + traceback.format_exc()
+        return ParsedMemory(people=['CRASH'], events=[err[:50]], missing_clues=[], memory_confidence='low')
 
 def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clues: dict) -> dict:
     if not api_key:
