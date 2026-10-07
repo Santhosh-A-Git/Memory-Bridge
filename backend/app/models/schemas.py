@@ -4,7 +4,7 @@ from typing import List, Optional, Any, Dict
 
 class TimeClue(BaseModel):
     type: str = Field(description="exact, approximate, or relative")
-    value: str
+    value: Optional[str] = None
 
 class ParsedMemory(BaseModel):
     people: List[str] = []

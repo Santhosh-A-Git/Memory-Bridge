@@ -64,16 +64,18 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
                 data = json.loads(match.group(0))
                 
                 # Apply canonical mapping to LLM output so it matches photos.json tags!
-                llm_events = data.get("events", [])
+                llm_events = data.get("events") or []
+                if isinstance(llm_events, str): llm_events = [llm_events]
                 mapped_events = []
                 for e in llm_events:
-                    e_lower = e.lower()
+                    if not e: continue
+                    e_lower = str(e).lower()
                     if e_lower in ["trip", "goa", "holiday", "goa trip"]:
                         mapped_events.append("vacation")
                     elif e_lower in ["farewell", "graduation"]:
                         mapped_events.append("college farewell")
                     else:
-                        mapped_events.append(e)
+                        mapped_events.append(str(e))
                 data["events"] = list(set(mapped_events))
                 
                 return ParsedMemory(**data)
@@ -193,7 +195,13 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
             
             match = re.search(r'\{.*\}', response.text, re.DOTALL)
             if match:
-                return json.loads(match.group(0))
+                data = json.loads(match.group(0))
+                if isinstance(data, list) and len(data) > 0:
+                    return data[0]
+                elif isinstance(data, dict):
+                    return data
+                else:
+                    raise ValueError("JSON is neither dict nor list")
             else:
                 raise ValueError("No JSON object could be extracted.")
         except Exception as e:
