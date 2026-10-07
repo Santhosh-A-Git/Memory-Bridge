@@ -92,8 +92,9 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         all_events = set(e.lower() for photo in photos for e in photo.get("event", []))
         all_locs = set((photo.get("location") or "").lower() for photo in photos if photo.get("location"))
         
-        # Add common synonyms
-        if "vacation" in all_events: all_events.update(["trip", "goa", "holiday"])
+        # Add common synonyms and external locations the user might test
+        all_locs.update(["goa", "pune", "kerala", "jaipur", "agra"])
+        if "vacation" in all_events: all_events.update(["trip", "goa trip", "holiday"])
         if "college farewell" in all_events: all_events.update(["farewell", "graduation"])
         
         for p in all_people:
@@ -108,7 +109,7 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
             
         # Map synonyms back to canonical dataset events so search.py works!
         for e in raw_found_events:
-            if e in ["trip", "goa", "holiday"]:
+            if e in ["trip", "goa", "holiday", "goa trip"]:
                 found_events.append("vacation")
             elif e in ["farewell", "graduation"]:
                 found_events.append("college farewell")
