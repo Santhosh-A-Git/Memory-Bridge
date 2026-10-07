@@ -1,3 +1,5 @@
+import json
+import re
 import os
 # pyrefly: ignore [missing-import]
 import google.generativeai as genai
