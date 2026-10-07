@@ -59,13 +59,29 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
         return ParsedMemory(**data)
     except Exception as e:
         print(f"Gemini parsing failed: {e}")
-        # Fallback to good mock data so the demo still works
+        
+        # SMART FALLBACK: If Google AI fails, manually parse the text so the MVP never blocks!
+        lower_text = memory_text.lower()
+        
+        found_people = []
+        for p in ["sister", "brother", "mom", "dad", "friends", "colleagues"]:
+            if p in lower_text: found_people.append(p)
+            
+        found_events = []
+        for ev in ["college farewell", "birthday", "wedding", "diwali", "new year", "vacation", "trip", "goa"]:
+            if ev in lower_text: found_events.append(ev)
+            
+        found_year = "2022"
+        import re
+        year_match = re.search(r'(202[0-4])', lower_text)
+        if year_match: found_year = year_match.group(1)
+            
         return ParsedMemory(
-            people=["sister"],
-            events=["college farewell"],
-            time={"type": "approximate", "value": "2022"},
-            missing_clues=["location", "exact_date"],
-            memory_confidence="high"
+            people=found_people,
+            events=found_events,
+            time={"type": "approximate", "value": found_year},
+            missing_clues=["location" if "goa" not in lower_text else "exact_date"],
+            memory_confidence="medium"
         )
 
 def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clues: dict) -> dict:
