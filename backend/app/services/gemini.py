@@ -23,7 +23,7 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
             memory_confidence="high"
         )
         
-    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.5-pro")
+    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-3.1-pro-preview")
     model = genai.GenerativeModel(model_name)
     
     prompt = f"""
@@ -75,7 +75,7 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
             "options": ["Hyderabad", "Bengaluru", "Other", "Not sure"]
         }
         
-    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.5-pro")
+    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-3.1-pro-preview")
     model = genai.GenerativeModel(model_name)
     
     prompt = f"""
