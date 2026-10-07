@@ -45,27 +45,41 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
     Memory: "{memory_text}"
     """
     
-    # We will use simple JSON mode parsing as the sdk supports it or simple regex
-    try:
-        response = model.generate_content(prompt)
-        import json, re
-        
-        match = re.search(r'\{.*\}', response.text, re.DOTALL)
-        if match:
-            data = json.loads(match.group(0))
-        else:
-            raise ValueError("No JSON object could be extracted.")
+    models_to_try = [
+        os.getenv("GEMINI_TEXT_MODEL", "gemini-3.1-pro-preview"),
+        "gemini-2.5-flash",
+        "gemini-2.5-pro",
+        "gemini-1.5-flash",
+        "gemini-1.5-pro",
+        "gemini-pro"
+    ]
+    
+    last_error = None
+    for m_name in models_to_try:
+        try:
+            model = genai.GenerativeModel(m_name)
+            response = model.generate_content(prompt)
+            import json, re
             
-        return ParsedMemory(**data)
-    except Exception as e:
-        error_msg = str(e).replace('"', "'")
-        print(f"Gemini parsing failed: {error_msg}")
-        return ParsedMemory(
-            people=[],
-            events=[f"ERROR: {error_msg}"[:200]],
-            missing_clues=["api_failure"],
-            memory_confidence="low"
-        )
+            match = re.search(r'\{.*\}', response.text, re.DOTALL)
+            if match:
+                data = json.loads(match.group(0))
+                return ParsedMemory(**data)
+            else:
+                raise ValueError("No JSON object could be extracted.")
+        except Exception as e:
+            last_error = e
+            continue
+            
+    # If all models fail
+    error_msg = str(last_error).replace('"', "'")
+    print(f"Gemini parsing failed on all models: {error_msg}")
+    return ParsedMemory(
+        people=[],
+        events=[f"ERROR: {error_msg}"[:200]],
+        missing_clues=["api_failure"],
+        memory_confidence="low"
+    )
 
 def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clues: dict) -> dict:
     if not api_key:
@@ -75,9 +89,6 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
             "options": ["Hyderabad", "Bengaluru", "Other", "Not sure"]
         }
         
-    model_name = os.getenv("GEMINI_TEXT_MODEL", "gemini-3.1-pro-preview")
-    model = genai.GenerativeModel(model_name)
-    
     prompt = f"""
     Based on the parsed memory and available candidates, decide the single best missing clue to ask for.
     You must only ask about a clue dimension that is currently MISSING.
@@ -96,34 +107,49 @@ def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clue
     Always include 'Not sure' in options.
     """
     
-    try:
-        response = model.generate_content(prompt)
-        import json, re
-        
-        match = re.search(r'\{.*\}', response.text, re.DOTALL)
-        if match:
-            return json.loads(match.group(0))
-        else:
-            raise ValueError("No JSON object could be extracted.")
-    except Exception as e:
-        print(f"Gemini next clue failed: {e}")
-        missing = memory.get("missing_clues", ["location"])
-        
-        if "exact_date" in missing and "location" not in missing:
-            return {
-                "clue_dimension": "exact_date",
-                "question": "Do you remember the exact month or date of this trip?",
-                "options": ["Yes", "No, just the year", "Not sure"]
-            }
-        elif "people" in missing:
-            return {
-                "clue_dimension": "people",
-                "question": "Who else was in the photo with you?",
-                "options": ["Friends", "Family", "Colleagues", "Not sure"]
-            }
-        else:
-            return {
-                "clue_dimension": "location",
-                "question": "Do you remember which city this was in?",
-                "options": ["Hyderabad", "Bengaluru", "Mumbai", "Not sure"]
-            }
+    models_to_try = [
+        os.getenv("GEMINI_TEXT_MODEL", "gemini-3.1-pro-preview"),
+        "gemini-2.5-flash",
+        "gemini-2.5-pro",
+        "gemini-1.5-flash",
+        "gemini-1.5-pro",
+        "gemini-pro"
+    ]
+    
+    last_error = None
+    for m_name in models_to_try:
+        try:
+            model = genai.GenerativeModel(m_name)
+            response = model.generate_content(prompt)
+            import json, re
+            
+            match = re.search(r'\{.*\}', response.text, re.DOTALL)
+            if match:
+                return json.loads(match.group(0))
+            else:
+                raise ValueError("No JSON object could be extracted.")
+        except Exception as e:
+            last_error = e
+            continue
+            
+    print(f"Gemini next clue failed on all models: {last_error}")
+    missing = memory.get("missing_clues", ["location"])
+    
+    if "exact_date" in missing and "location" not in missing:
+        return {
+            "clue_dimension": "exact_date",
+            "question": "Do you remember the exact month or date of this trip?",
+            "options": ["Yes", "No, just the year", "Not sure"]
+        }
+    elif "people" in missing:
+        return {
+            "clue_dimension": "people",
+            "question": "Who else was in the photo with you?",
+            "options": ["Friends", "Family", "Colleagues", "Not sure"]
+        }
+    else:
+        return {
+            "clue_dimension": "location",
+            "question": "Do you remember which city this was in?",
+            "options": ["Hyderabad", "Bengaluru", "Mumbai", "Not sure"]
+        }
