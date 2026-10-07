@@ -25,4 +25,10 @@ app.include_router(api_router, prefix="/api")
 
 @app.get("/healthz")
 def health_check():
-    return {"status": "ok"}
+    import traceback
+    try:
+        from app.services.gemini import parse_memory_with_gemini
+        result = parse_memory_with_gemini("test memory")
+        return {"status": "ok", "result": result.model_dump()}
+    except Exception as e:
+        return {"status": "error", "error": str(e), "traceback": traceback.format_exc()}

@@ -58,14 +58,13 @@ def parse_memory_with_gemini(memory_text: str) -> ParsedMemory:
             
         return ParsedMemory(**data)
     except Exception as e:
-        print(f"Gemini parsing failed: {e}")
-        # Fallback to good mock data so the demo still works
+        error_msg = str(e).replace('"', "'")
         return ParsedMemory(
-            people=["sister"],
-            events=["college farewell"],
+            people=["API_ERROR"],
+            events=[error_msg[:150]],
             time={"type": "approximate", "value": "2022"},
-            missing_clues=["location", "exact_date"],
-            memory_confidence="high"
+            missing_clues=["api_failure", "check_logs"],
+            memory_confidence="low"
         )
 
 def get_next_clue_with_gemini(memory: dict, candidate_count: int, available_clues: dict) -> dict:
